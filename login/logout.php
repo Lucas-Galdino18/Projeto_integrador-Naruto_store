@@ -1,0 +1,16 @@
+<?php
+// 1. Conecta-se à sessão ativa do navegador/servidor
+session_start();
+
+// 2. Limpa todas as variáveis da sessão (usuario_id, usuario_nome, usuario_tipo)
+session_unset();
+
+// 3. Destrói permanentemente o registro da sessão no servidor
+session_destroy();
+
+// 4. Redireciona o usuário com a rota absoluta correta para a página de login
+header('Location: /projeto_integrador/login/login.php');
+
+// 5. Encerra a execução do PHP para garantir o redirecionamento
+exit;
+?>
