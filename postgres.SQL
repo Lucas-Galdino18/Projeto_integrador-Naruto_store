@@ -11,7 +11,7 @@ CREATE TABLE usuarios (
     tipo VARCHAR(20) DEFAULT 'usuario'
 );
 
--- 3. Tabela de produtos (vazia, pronta para cadastrares pelo site)
+-- 3. Tabela de produtos (vazia, pronta para cadastrar pelo site)
 CREATE TABLE produtos (
     id SERIAL PRIMARY KEY,
     nome VARCHAR(150) NOT NULL,
