@@ -56,3 +56,48 @@ projeto_integrador/
 ├── index.php            # Dashboard principal
 ├── postgres.SQL         # Script de criação das tabelas e massa de dados
 └── README.md            # Documentação
+
+
+## 3. Dicionário de Dados
+
+### Tabela: `usuarios`
+| Coluna | Tipo de Dado | Restrições | Descrição |
+| :--- | :--- | :--- | :--- |
+| `id` | `SERIAL` | `PRIMARY KEY` | Identificador único do usuário |
+| `nome` | `VARCHAR(100)` | `NOT NULL` | Nome completo |
+| `usuario` | `VARCHAR(50)` | `UNIQUE`, `NOT NULL` | E-mail / Login de acesso |
+| `senha` | `VARCHAR(255)` | `NOT NULL` | Senha hash (`PASSWORD_DEFAULT`) |
+| `tipo` | `VARCHAR(20)` | `DEFAULT 'usuario'` | Perfil de acesso (`admin` ou `usuario`) |
+
+### Tabela: `produtos`
+| Coluna | Tipo de Dado | Restrições | Descrição |
+| :--- | :--- | :--- | :--- |
+| `id` | `SERIAL` | `PRIMARY KEY` | Identificador único do produto |
+| `nome` | `VARCHAR(150)` | `NOT NULL` | Nome do produto/equipamento |
+| `categoria` | `VARCHAR(100)` | - | Categoria (Armas, Vestuário, etc.) |
+| `preco` | `NUMERIC(10, 2)`| `NOT NULL` | Valor unitário em R$ |
+| `quantidade` | `INTEGER` | `DEFAULT 0` | Quantidade disponível no estoque |
+| `imagem` | `TEXT` | - | URL da imagem do produto |
+
+---
+
+## 4. Diagrama de Entidade-Relacionamento (D.E.R.)
+
+```mermaid
+erDiagram
+    USUARIOS {
+        int id PK
+        string nome
+        string usuario UK
+        string senha
+        string tipo
+    }
+
+    PRODUTOS {
+        int id PK
+        string nome
+        string categoria
+        decimal preco
+        int quantidade
+        string imagem
+    }
