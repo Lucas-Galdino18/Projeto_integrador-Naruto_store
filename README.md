@@ -6,7 +6,7 @@ Sistema web para controle de estoque de uma loja temática do universo de Naruto
 
 ## Figma
 
-* **Link para o meu Figma:** https://www.figma.com/design/lqtZDe0TALyaODf1Alrbr0/Prototipagem-Trabalho-Integrado?node-id=3-25&p=f&t=X4OEaBJgsJKbTqH4-0
+* **Link para o meu Figma:** https://www.figma.com/design/lqtZDe0TALyaODf1Alrbr0/Prototipagem-Trabalho-Integrado?node-id=0-1&p=f&t=1iQ0mReWa8enld6O-0
 
 ##  Tecnologias
 
