@@ -23,20 +23,19 @@ Projeto acadômico em PHP e PostgreSQL para controle de estoque de uma loja tem�
 ---
 
 ## O que o sistema faz
-- **Login e Usuários:** Tela de login, cadastro de contas, controle de sessão (`$_SESSION`) e logout.
+- **Login e Usuários:** Tela de login, cadastro de contas, controle de sessão (`$_SESSION`) e logout (`login/`).
 - **Segurança:** Senhas salvas com hash (`password_hash`), trava de acesso nas páginas internas (`verifica_user.php`) e consultas com Prepared Statements contra SQL Injection.
+- **Inicialização e Setup:** Script automatizado (`setup.php`) para preparação inicial do ambiente.
 - **CRUD de Produtos:**
-  - `create.php` - Cadastra novos produtos (nome, categoria, preço, quantidade e imagem).
-  - `select.php` - Tabela de listagem geral do estoque.
-  - `select_w.php` - Busca rápida de um item por ID.
-  - `update.php` - Edita os dados do produto.
-  - `delete.php` - Exclui produtos (exclusivo para perfil admin).
+  - `app/select.php` - Listagem geral do estoque.
+  - `app/update.php` - Edição dos dados do produto.
+  - `app/delete.php` - Exclusão de produtos (exclusivo para perfil admin).
 
 ---
 
-## Implantação e Execução (Servidor Linux)
+## Implantação e Execução (Servidor Linux via MobaXterm)
 
-O sistema roda no servidor local Linux sob o servidor web Apache.
+O sistema roda no servidor local Linux através do servidor web Apache e PostgreSQL.
 
 ### 1. Localização do Projeto
 O projeto está localizado no diretório padrão do Apache:
@@ -45,10 +44,10 @@ cd /var/www/html/projeto_integrador
 ```
 
 ### 2. Sincronização com o GitHub
-A manutenção e o deploy do código são feitos diretamente pelo terminal via SSH (MobaXterm):
+A manutenção e o deploy do código são feitos diretamente pelo terminal via SSH no MobaXterm:
 ```bash
 git add .
-git commit -m "Ajustes"
+git commit -m "Ajustes na estrutura"
 git push origin main
 ```
 
@@ -56,16 +55,29 @@ git push origin main
 
 ## Banco de Dados (`postgres.SQL`)
 
-### Como Importar o Banco no PostgreSQL
-Para carregar a estrutura das tabelas e o usuário admin inicial no banco `escola`:
+### Como Importar a Estrutura no PostgreSQL
+Para carregar o banco de dados `escola`, as tabelas e o usuário administrador inicial:
 
 ```bash
 sudo -u postgres psql -d escola -f postgres.SQL
 ```
 
-*Ou acesse o terminal do banco:*
+### Como Visualizar as Tabelas no Terminal (Demonstração)
+Para apresentar os dados das tabelas diretamente no terminal do MobaXterm sem abrir o VS Code:
+
 ```bash
+# 1. Entrar na CLI do PostgreSQL
 sudo -u postgres psql -d escola
+
+# 2. Desativar a paginação (evita que a tabela quebre na tela)
+\pset pager off
+
+# 3. Consultar usuários e produtos
+SELECT id, nome, usuario, tipo FROM usuarios;
+SELECT id, nome, categoria, preco, quantidade FROM produtos;
+
+# 4. Sair do PostgreSQL
+\q
 ```
 
 ---
@@ -73,7 +85,10 @@ sudo -u postgres psql -d escola
 ## Script SQL da Base de Dados (`postgres.SQL`)
 
 ```sql
--- Conectar ao banco de dados 'escola'
+-- Criar o banco de dados (caso ainda não exista)
+-- CREATE DATABASE escola;
+
+-- Conectar ao banco 'escola':
 -- \c escola;
 
 -- 1. Tabela de Usuários
@@ -95,8 +110,7 @@ CREATE TABLE IF NOT EXISTS produtos (
     imagem TEXT
 );
 
--- Inserção de Usuário Administrador Padrão
--- Login: naruto@viladafolha.com | Senha: 123456
+-- Inserção do Administrador Padrão (naruto@viladafolha.com | 123456)
 INSERT INTO usuarios (nome, usuario, senha, tipo)
 VALUES (
     'Naruto Uzumaki',
@@ -113,10 +127,8 @@ VALUES (
 ```text
 projeto_integrador/
 ├── app/
-│   ├── create.php        # Cadastro de produtos
 │   ├── delete.php        # Exclusão de produtos
 │   ├── select.php        # Listagem do estoque
-│   ├── select_w.php      # Consulta por ID
 │   └── update.php        # Edição de produtos
 ├── css/
 │   └── style.css         # Estilos da aplicação
@@ -124,16 +136,17 @@ projeto_integrador/
 │   └── connect.php       # Conexão PDO com PostgreSQL
 ├── includes/
 │   ├── footer.php        # Rodapé
-│   ├── functions.php     # Funções do CRUD
-│   └── header.php        # Topo e menu
+│   ├── functions.php     # Funções auxiliares do CRUD
+│   └── header.php        # Topo e menu de navegação
 ├── login/
-│   ├── cadastrar.php     # Registro de usuário
+│   ├── cadastrar.php     # Registro de usuários
 │   ├── login.php         # Autenticação
 │   ├── logout.php        # Encerramento de sessão
-│   └── verifica_user.php # Trava de segurança das páginas
-├── index.php             # Redirecionamento e tela inicial
+│   └── verifica_user.php # Verificação de segurança
+├── index.php             # Tela inicial da aplicação
 ├── postgres.SQL          # Script SQL do banco de dados
-└── README.md             # Documentação oficial
+├── README.md             # Documentação oficial
+└── setup.php             # Script de configuração inicial
 ```
 
 ---
@@ -159,7 +172,7 @@ projeto_integrador/
 | `categoria` | `VARCHAR(100)` | - | Categoria do item |
 | `preco` | `NUMERIC(10, 2)` | `NOT NULL` | Preço em R$ |
 | `quantidade` | `INTEGER` | `DEFAULT 0` | Quantidade em estoque |
-| `imagem` | `TEXT` | - | URL da foto do produto |
+| `imagem` | `TEXT` | - | URL da imagem do produto |
 
 ---
 
@@ -190,7 +203,7 @@ erDiagram
 ## Normalização do Banco de Dados
 
 ### Primeira Forma Normal (1FN)
-- **Atributos Atômicos:** Cada coluna guarda apenas um valor por registro (ex: preço único, sem salvar múltiplos e-mails no mesmo campo).
+- **Atributos Atômicos:** Cada coluna guarda apenas um valor por registro (ex: preço único, sem guardar múltiplos e-mails no mesmo campo).
 - **Sem Grupos Repetidos:** Não existem colunas duplicadas.
 
 ### Segunda Forma Normal (2FN)
