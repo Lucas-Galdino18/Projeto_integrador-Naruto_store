@@ -5,7 +5,8 @@ Projeto acadômico em PHP e PostgreSQL para controle de estoque de uma loja tem�
 ---
 
 ## Link de Acesso e Credenciais
-- **URL da Aplicação:** `http://192.168.10.57/projeto_integrador`
+- **URL da Aplicação (Local):** `http://localhost/projeto_integrador`
+- **URL da Aplicação (Rede Local):** `http://192.168.10.57/projeto_integrador`
 - **Login do Administrador:** `naruto@viladafolha.com`
 - **Senha do Administrador:** `123456`
 
@@ -35,40 +36,48 @@ Projeto acadômico em PHP e PostgreSQL para controle de estoque de uma loja tem�
 
 ---
 
-## Implantação e Execução (Servidor Linux via MobaXterm)
+## Implantação e Execução (Servidor Linux / Deploy Local)
 
-O sistema roda no servidor local Linux através do servidor web Apache e PostgreSQL.
+O sistema roda sob o servidor web Apache e banco de dados PostgreSQL.
 
-### 1. Localização do Projeto
-O projeto está localizado no diretório padrão do Apache:
+### 1. Clonar e Posicionar o Projeto
+No diretório padrão de hospedagem do Apache (`/var/www/html/`):
+
 ```bash
-cd /var/www/html/projeto_integrador
-```
-
-### 2. Sincronização com o GitHub
-A manutenção e o deploy do código são feitos diretamente pelo terminal via SSH no MobaXterm:
-```bash
-git add .
-git commit -m "Ajustes na estrutura do banco"
-git push origin main
+cd /var/www/html/
+git clone [https://github.com/SEU_USUARIO/SEU_REPOSITORIO.git](https://github.com/SEU_USUARIO/SEU_REPOSITORIO.git) projeto_integrador
+cd projeto_integrador
 ```
 
 ---
 
 ## Banco de Dados (`postgres.SQL`)
 
-### Como Importar a Estrutura no PostgreSQL
-Para recriar a estrutura limpa das tabelas e o usuário administrador inicial:
+### 1. Como Criar e Importar a Estrutura no PostgreSQL
+Para criar a base de dados `escola`, carregar a estrutura limpa das tabelas e o usuário administrador inicial:
 
 ```bash
+# Criar o banco de dados 'escola' (caso ainda não exista)
+sudo -u postgres createdb escola
+
+# Importar o script de tabelas e dados iniciais
 sudo -u postgres psql -d escola -f postgres.SQL
 ```
 
-### Como Visualizar as Tabelas no Terminal (Demonstração)
-Para apresentar os dados das tabelas diretamente no terminal do MobaXterm sem abrir o VS Code:
+### 2. Configuração de Conexão (`database/connect.php`)
+Certifique-se de que o arquivo `database/connect.php` possui a DSN e as credenciais de acesso corretas do seu PostgreSQL local:
+
+```php
+$dsn = "pgsql:host=localhost;dbname=escola";
+$user = "postgres";
+$password = "postgres"; // Altere para a senha do seu PostgreSQL, se houver
+```
+
+### 3. Como Visualizar as Tabelas no Terminal (Demonstração)
+Para consultar as tabelas diretamente na CLI do PostgreSQL:
 
 ```bash
-# 1. Entrar na CLI do PostgreSQL
+# 1. Entrar na CLI do PostgreSQL no banco escola
 sudo -u postgres psql -d escola
 
 # 2. Desativar a paginação (evita que a tabela quebre na tela)
@@ -78,7 +87,7 @@ sudo -u postgres psql -d escola
 SELECT id, nome, usuario, tipo FROM usuarios;
 SELECT id, nome, categoria, preco, quantidade FROM produtos;
 
-# 4. Sair do PostgreSQL
+# 4. Sair da CLI
 \q
 ```
 
@@ -91,7 +100,7 @@ SELECT id, nome, categoria, preco, quantidade FROM produtos;
 DROP TABLE IF EXISTS usuarios CASCADE;
 DROP TABLE IF EXISTS produtos CASCADE;
 
--- 2. Tabela de utilizadores
+-- 2. Tabela de usuarios
 CREATE TABLE usuarios (
     id SERIAL PRIMARY KEY,
     nome VARCHAR(100) NOT NULL,
@@ -212,4 +221,4 @@ erDiagram
 ---
 
 ## Autor
--  Desenvolvido por **Lucas Vilas Boas Galdino** para o Projeto Integrador.
+-  Desenvolvido por **Lucas Galdino** para o Projeto Integrador.
