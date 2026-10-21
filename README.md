@@ -34,49 +34,38 @@ Projeto acadômico em PHP e PostgreSQL para controle de estoque de uma loja tem�
 
 ---
 
-## Processo de Deploy e Configuração do Servidor
+## Implantação e Execução (Servidor Linux)
 
-O deploy da aplicação foi realizado em um ambiente Linux com servidor web Apache e PostgreSQL integrados.
+O sistema roda no servidor local Linux sob o servidor web Apache.
 
-### 1. Clonagem e Hospedagem do Código
-O repositório do projeto foi clonado diretamente na pasta raiz do Apache:
+### 1. Localização do Projeto
+O projeto está localizado no diretório padrão do Apache:
 ```bash
-cd /var/www/html
-git clone [https://github.com/Lucas-Galdino18/projeto_integrador.git](https://github.com/Lucas-Galdino18/projeto_integrador.git)
 cd /var/www/html/projeto_integrador
 ```
 
-### 2. Configuração das Permissões do Servidor
-Para garantir que o Apache consiga ler e executar os arquivos PHP e recursos CSS/imagens:
+### 2. Sincronização com o GitHub
+A manutenção e o deploy do código são feitos diretamente pelo terminal via SSH (MobaXterm):
 ```bash
-sudo chown -R www-data:www-data /var/www/html/projeto_integrador
-sudo chmod -R 755 /var/www/html/projeto_integrador
+git add .
+git commit -m "Ajustes"
+git push origin main
 ```
-
-### 3. Conexão do PHP com o PostgreSQL
-A conexão com o banco é realizada em `database/connect.php` através de PDO (`pgsql:host=localhost;dbname=escola`).
 
 ---
 
-## Dump e Backup do Banco de Dados (PostgreSQL)
+## Banco de Dados (`postgres.SQL`)
 
-### Como Importar o Dump (Restaurar o Banco)
-Para recriar a estrutura da base de dados `escola` e carregar a massa de dados inicial:
+### Como Importar o Banco no PostgreSQL
+Para carregar a estrutura das tabelas e os dados iniciais no banco `escola`:
 
 ```bash
-# 1. Acessar a pasta do projeto
-cd /var/www/html/projeto_integrador
-
-# 2. Executar o script SQL no banco 'escola'
 sudo -u postgres psql -d escola -f postgres.SQL
 ```
 
-### Como Gerar um Novo Dump (Exportar o Banco)
-Caso precise fazer um backup atualizado de todos os dados do sistema em produção:
-
+*Ou acesse o terminal do banco:*
 ```bash
-# Gera o arquivo dump completo da base 'escola'
-pg_dump -U postgres -d escola > postgres.SQL
+sudo -u postgres psql -d escola
 ```
 
 ---
@@ -149,7 +138,7 @@ projeto_integrador/
 │   ├── logout.php        # Encerramento de sessão
 │   └── verifica_user.php # Trava de segurança das páginas
 ├── index.php             # Redirecionamento e tela inicial
-├── postgres.SQL          # Script / Dump do banco de dados
+├── postgres.SQL          # Script SQL do banco de dados
 └── README.md             # Documentação oficial
 ```
 
@@ -208,7 +197,7 @@ erDiagram
 
 ### Primeira Forma Normal (1FN)
 - **Atributos Atômicos:** Cada coluna guarda apenas um valor por registro (ex: preço único, sem salvar múltiplos e-mails no mesmo campo).
-- **Sem Grupos Repetidos:** Não existem colunas duplicadas como `telefone1`, `telefone2`.
+- **Sem Grupos Repetidos:** Não existem colunas duplicadas.
 
 ### Segunda Forma Normal (2FN)
 - **Atendimento à 1FN:** A estrutura cumpre todas as regras da 1FN.
