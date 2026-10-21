@@ -221,4 +221,4 @@ erDiagram
 ---
 
 ## Autor
--  Desenvolvido por **Lucas Galdino** para o Projeto Integrador.
+- Desenvolvido por **Lucas Galdino** para o Projeto Integrador.
