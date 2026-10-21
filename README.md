@@ -57,7 +57,7 @@ git push origin main
 ## Banco de Dados (`postgres.SQL`)
 
 ### Como Importar o Banco no PostgreSQL
-Para carregar a estrutura das tabelas e os dados iniciais no banco `escola`:
+Para carregar a estrutura das tabelas e o usuário admin inicial no banco `escola`:
 
 ```bash
 sudo -u postgres psql -d escola -f postgres.SQL
@@ -104,12 +104,6 @@ VALUES (
     '$2y$10$e0MYzXyjpJS7Pd0RVvHwHe8fS.g4u8L5aE5yq0IeQd21yvB5k3mK6',
     'admin'
 ) ON CONFLICT (usuario) DO NOTHING;
-
--- Inserção de Produtos Exemplo
-INSERT INTO produtos (nome, categoria, preco, quantidade, imagem) VALUES
-('Kunai Minato Namikaze', 'Armas', 45.90, 10, '[https://m.media-amazon.com/images/I/61xtL.jpg](https://m.media-amazon.com/images/I/61xtL.jpg)'),
-('Manto da Akatsuki', 'Acessórios', 30.00, 2, '[https://soi-bucket.s3.amazonaws.com/manto.jpg](https://soi-bucket.s3.amazonaws.com/manto.jpg)'),
-('Crocs Sasuke Uchiha', 'Colecionável', 199.90, 0, '[https://droper-media.s3.amazonaws.com/sasuke.jpg](https://droper-media.s3.amazonaws.com/sasuke.jpg)');
 ```
 
 ---
