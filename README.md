@@ -115,7 +115,7 @@ INSERT INTO usuarios (nome, usuario, senha, tipo)
 VALUES (
     'Naruto Uzumaki',
     'naruto@viladafolha.com',
-    '$2y$10$e0MYzXyjpJS7Pd0RVvHwHe8fS.g4u8L5aE5yq0IeQd21yvB5k3mK6',
+    '123456',
     'admin'
 ) ON CONFLICT (usuario) DO NOTHING;
 ```
