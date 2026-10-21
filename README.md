@@ -1,6 +1,6 @@
 # Naruto Store - Gestão de Estoque
 
-Projeto acadêmico em PHP e PostgreSQL para controle de estoque de uma loja temática do universo de Naruto. Feito para praticar rotinas de CRUD, controle de acesso com sessão e modelagem de banco de dados relacional.
+Projeto acadômico em PHP e PostgreSQL para controle de estoque de uma loja temática do universo de Naruto. Feito para praticar rotinas de CRUD, controle de acesso com sessão e modelagem de banco de dados relacional.
 
 ---
 
@@ -26,7 +26,7 @@ Projeto acadêmico em PHP e PostgreSQL para controle de estoque de uma loja tem�
 
 ## O que o sistema faz
 - **Login e Usuários:** Tela de login, cadastro de contas, controle de sessão (`$_SESSION`) e logout (`login/`).
-- **Segurança:** Senhas salvas com hash (`password_hash`), trava de acesso nas páginas internas (`verifica_user.php`) e consultas com Prepared Statements contra SQL Injection.
+- **Segurança:** Trava de acesso nas páginas internas (`verifica_user.php`) e consultas com Prepared Statements contra SQL Injection.
 - **Inicialização e Setup:** Script automatizado (`setup.php`) para preparação inicial do ambiente.
 - **CRUD de Produtos:**
   - `app/select.php` - Listagem geral do estoque.
@@ -49,7 +49,7 @@ cd /var/www/html/projeto_integrador
 A manutenção e o deploy do código são feitos diretamente pelo terminal via SSH no MobaXterm:
 ```bash
 git add .
-git commit -m "Ajustes na documentação"
+git commit -m "Ajustes na estrutura do banco"
 git push origin main
 ```
 
@@ -58,7 +58,7 @@ git push origin main
 ## Banco de Dados (`postgres.SQL`)
 
 ### Como Importar a Estrutura no PostgreSQL
-Para carregar o banco de dados `escola`, as tabelas e o usuário administrador inicial:
+Para recriar a estrutura limpa das tabelas e o usuário administrador inicial:
 
 ```bash
 sudo -u postgres psql -d escola -f postgres.SQL
@@ -87,14 +87,12 @@ SELECT id, nome, categoria, preco, quantidade FROM produtos;
 ## Script SQL da Base de Dados (`postgres.SQL`)
 
 ```sql
--- Criar o banco de dados (caso ainda não exista)
--- CREATE DATABASE escola;
+-- 1. Limpa tabelas antigas para evitar erros
+DROP TABLE IF EXISTS usuarios CASCADE;
+DROP TABLE IF EXISTS produtos CASCADE;
 
--- Conectar ao banco 'escola':
--- \c escola;
-
--- 1. Tabela de Usuários
-CREATE TABLE IF NOT EXISTS usuarios (
+-- 2. Tabela de utilizadores
+CREATE TABLE usuarios (
     id SERIAL PRIMARY KEY,
     nome VARCHAR(100) NOT NULL,
     usuario VARCHAR(50) UNIQUE NOT NULL,
@@ -102,24 +100,19 @@ CREATE TABLE IF NOT EXISTS usuarios (
     tipo VARCHAR(20) DEFAULT 'usuario'
 );
 
--- 2. Tabela de Produtos
-CREATE TABLE IF NOT EXISTS produtos (
+-- 3. Tabela de produtos (vazia, pronta para cadastrar pelo site)
+CREATE TABLE produtos (
     id SERIAL PRIMARY KEY,
     nome VARCHAR(150) NOT NULL,
     categoria VARCHAR(100),
     preco NUMERIC(10, 2) NOT NULL,
-    quantidade INTEGER DEFAULT 0,
+    quantidade INT DEFAULT 0,
     imagem TEXT
 );
 
--- Inserção do Administrador Padrão (naruto@viladafolha.com | 123456)
+-- 4. Administrador para fazer login
 INSERT INTO usuarios (nome, usuario, senha, tipo)
-VALUES (
-    'Naruto Uzumaki',
-    'naruto@viladafolha.com',
-    '$2y$10$e0MYzXyjpJS7Pd0RVvHwHe8fS.g4u8L5aE5yq0IeQd21yvB5k3mK6',
-    'admin'
-) ON CONFLICT (usuario) DO NOTHING;
+VALUES ('Naruto Uzumaki', 'naruto@viladafolha.com', '123456', 'admin');
 ```
 
 ---
@@ -162,7 +155,7 @@ projeto_integrador/
 | `id` | `SERIAL` | `PRIMARY KEY` | ID único do usuário |
 | `nome` | `VARCHAR(100)` | `NOT NULL` | Nome completo |
 | `usuario` | `VARCHAR(50)` | `UNIQUE`, `NOT NULL` | E-mail / Login de acesso |
-| `senha` | `VARCHAR(255)` | `NOT NULL` | Senha criptografada |
+| `senha` | `VARCHAR(255)` | `NOT NULL` | Senha de acesso |
 | `tipo` | `VARCHAR(20)` | `DEFAULT 'usuario'` | Perfil (`admin` ou `usuario`) |
 
 ### Tabela: `produtos`
@@ -214,9 +207,9 @@ erDiagram
 
 ### Terceira Forma Normal (3FN)
 - **Atendimento à 2FN:** A estrutura cumpre todas as regras da 2FN.
-- **Livre de Dependências Transitivas:** Não existem colunas não-chave que dependem de outras colunas não-chave (por exemplo, a categoria não determina o preço).
+- **Livre de Dependências Transitivas:** Não existem colunas não-chave que dependem de outras colunas não-chave.
 
 ---
 
 ## Autor
-- Projeto desenvolvido por **Lucas Galdino** para o Projeto Integrador.
+-  Desenvolvido por **Lucas Vilas Boas Galdino** para o Projeto Integrador.
