@@ -208,7 +208,7 @@ erDiagram
 ## Normalização do Banco de Dados
 
 ### Primeira Forma Normal (1FN)
-- **Atributos Atômicos:** Cada coluna guarda apenas um valor por registro (ex: preço único, sem guardar múltiplos e-mails no mesmo campo).
+- **Atributos Atômicos:** Cada coluna guarda apenas um valor por registro (ex: preço único, sem salvar múltiplos e-mails no mesmo campo).
 - **Sem Grupos Repetidos:** Não existem colunas duplicadas.
 
 ### Segunda Forma Normal (2FN)
