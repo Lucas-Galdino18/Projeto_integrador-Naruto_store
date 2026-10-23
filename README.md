@@ -156,7 +156,7 @@ projeto_integrador/
 
 ---
 
-## D
+## Dicionário de Dados
 
 ### Tabela: `usuarios`
 
