@@ -23,7 +23,6 @@ Projeto acadêmico em PHP e PostgreSQL para controle de estoque de uma loja tem�
 ## O que o sistema faz
 - Login e Usuários: Tela de login, cadastro de contas, controle de sessão ($_SESSION) e logout (login/).
 - Segurança: Trava de acesso nas páginas internas (verifica_user.php) e consultas com Prepared Statements contra SQL Injection.
-- Inicialização e Setup: Script automatizado (setup.php) para preparação inicial do ambiente.
 - CRUD de Produtos:
   - app/select.php: Listagem geral do estoque.
   - app/update.php: Edição dos dados do produto.
@@ -35,7 +34,7 @@ Projeto acadêmico em PHP e PostgreSQL para controle de estoque de uma loja tem�
 
 O sistema roda sob o servidor web Apache e banco de dados PostgreSQL.
 
-### 1. Clonar e posicionar o projeto
+### 1. Clonar o projeto
 No diretório padrão de hospedagem do Apache (/var/www/html/):
 
 ```bash
@@ -44,41 +43,19 @@ git clone [https://github.com/Lucas-Galdino18/projeto_integrador.git](https://gi
 cd projeto_integrador
 ```
 
-### 2. Ajustar Permissões de Pasta
-Garante que o servidor Apache consiga ler e executar os arquivos da aplicação:
+### 2. Criar e Importar o Banco de Dados no PostgreSQL
+Crie a base de dados escola e carregue a estrutura de tabelas com o usuário inicial:
 
 ```bash
-sudo chmod -R 755 /var/www/html/projeto_integrador
-sudo chown -R www-data:www-data /var/www/html/projeto_integrador
-```
-
-### 3. Gerar o Dump do Banco de Dados (Exportação)
-Para exportar a estrutura e dados do banco escola em um arquivo SQL de backup:
-
-```bash
-pg_dump -U postgres -d escola > postgres.SQL
-```
-
-### 4. Criar e Importar a Estrutura no PostgreSQL (Deploy)
-Para criar a base de dados escola, carregue a estrutura limpa das tabelas e o usuário administrador inicial:
-
-```bash
-# Criar o banco de dados 'escola' (caso ainda não exista)
+# Criar o banco de dados 'escola'
 sudo -u postgres createdb escola
 
-# Importar o script de tabelas e dados iniciais
+# Importar o script de tabelas e dados
 sudo -u postgres psql -d escola -f postgres.SQL
 ```
 
-### 5. Execução Alternativa via Setup Automatizado
-Caso prefira criar as tabelas diretamente via script PHP sem usar o arquivo `.SQL`, acesse no navegador:
-
-```text
-[http://192.168.10.57/projeto_integrador/setup.php](http://192.168.10.57/projeto_integrador/setup.php)
-```
-
-### 6. Configuração de Conexão (database/connect.php)
-Verifique se o arquivo database/connect.php possui as credenciais de acesso corretas do seu PostgreSQL local:
+### 3. Configuração de Conexão (database/connect.php)
+Verifique se o arquivo database/connect.php possui as credenciais de acesso do servidor:
 
 ```php
 $host = '192.168.10.57'; // IP do servidor PostgreSQL
@@ -92,7 +69,7 @@ $port = '5432';
 
 ## Como Visualizar as Tabelas no Terminal (Demonstração)
 
-Para consultar as tabelas diretamente na CLI do PostgreSQL:
+Para consultar as tabelas diretamente na CLI do PostgreSQL durante a apresentação:
 
 ```bash
 # 1. Entrar na CLI do PostgreSQL no banco escola
@@ -167,8 +144,7 @@ projeto_integrador/
 │   └── verifica_user.php # Verificação de segurança
 ├── index.php             # Tela inicial da aplicação
 ├── postgres.SQL          # Script SQL do banco de dados
-├── README.md             # Documentação oficial
-└── setup.php             # Script de configuração inicial
+└── README.md             # Documentação oficial
 ```
 
 ---
@@ -197,6 +173,25 @@ projeto_integrador/
 ---
 
 ## Diagrama de Entidade-Relacionamento (DER)
+
+```mermaid
+erDiagram
+    USUARIOS {
+        int id PK
+        string nome
+        string usuario
+        string senha
+        string tipo
+    }
+    PRODUTOS {
+        int id PK
+        string nome
+        string categoria
+        decimal preco
+        int quantidade
+        string imagem
+    }
+```
 
 ---
 
