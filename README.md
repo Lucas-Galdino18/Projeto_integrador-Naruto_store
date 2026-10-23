@@ -44,7 +44,7 @@ No diretório padrão de hospedagem do Apache (`/var/www/html/`):
 
 ```bash
 cd /var/www/html/
-git clone [https://github.com/SEU_USUARIO/projeto_integrador.git](https://github.com/SEU_USUARIO/projeto_integrador.git)
+git clone [https://github.com/Lucas-Galdino18/projeto_integrador.git](https://github.com/Lucas-Galdino18/projeto_integrador.git)
 cd projeto_integrador
 ```
 
