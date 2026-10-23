@@ -5,7 +5,6 @@ Projeto acadômico em PHP e PostgreSQL para controle de estoque de uma loja tem�
 ---
 
 ## Link de Acesso e Credenciais
-- **URL da Aplicação (Local):** `http://localhost/projeto_integrador`
 - **URL da Aplicação (Rede Local):** `http://192.168.10.57/projeto_integrador`
 - **Login do Administrador:** `naruto@viladafolha.com`
 - **Senha do Administrador:** `123456`
