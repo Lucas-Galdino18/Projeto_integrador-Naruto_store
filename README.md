@@ -64,12 +64,14 @@ sudo -u postgres psql -d escola -f postgres.SQL
 ```
 
 ### 2. Configuração de Conexão (`database/connect.php`)
-Certifique-se de que o arquivo `database/connect.php` possui a DSN e as credenciais de acesso corretas do seu PostgreSQL local:
+Certifique-se de que o arquivo `database/connect.php` possui as credenciais de acesso corretas do seu PostgreSQL local:
 
 ```php
-$dsn = "pgsql:host=localhost;dbname=escola";
-$user = "postgres";
-$password = "postgres"; // Altere para a senha do seu PostgreSQL, se houver
+$host = '192.168.10.57'; // IP do servidor PostgreSQL
+$db   = 'escola';        // Nome da base de dados
+$user = 'postgres';      // Utilizador do Postgres
+$pass = 'turma1';        // Palavra-passe do utilizador
+$port = '5432';
 ```
 
 ### 3. Como Visualizar as Tabelas no Terminal (Demonstração)
