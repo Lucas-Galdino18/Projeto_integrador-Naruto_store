@@ -44,14 +44,22 @@ git clone [https://github.com/Lucas-Galdino18/projeto_integrador.git](https://gi
 cd projeto_integrador
 ```
 
-### 2. Gerar o Dump do Banco de Dados (Exportação)
-Para salvar a estrutura e os dados do banco escola em um arquivo SQL:
+### 2. Ajustar Permissões de Pasta
+Garante que o servidor Apache consiga ler e executar os arquivos da aplicação:
+
+```bash
+sudo chmod -R 755 /var/www/html/projeto_integrador
+sudo chown -R www-data:www-data /var/www/html/projeto_integrador
+```
+
+### 3. Gerar o Dump do Banco de Dados (Exportação)
+Para exportar a estrutura e dados do banco escola em um arquivo SQL de backup:
 
 ```bash
 pg_dump -U postgres -d escola > postgres.SQL
 ```
 
-### 3. Criar e Importar a Estrutura no PostgreSQL (Deploy)
+### 4. Criar e Importar a Estrutura no PostgreSQL (Deploy)
 Para criar a base de dados escola, carregue a estrutura limpa das tabelas e o usuário administrador inicial:
 
 ```bash
@@ -62,7 +70,14 @@ sudo -u postgres createdb escola
 sudo -u postgres psql -d escola -f postgres.SQL
 ```
 
-### 4. Configuração de Conexão (database/connect.php)
+### 5. Execução Alternativa via Setup Automatizado
+Caso prefira criar as tabelas diretamente via script PHP sem usar o arquivo `.SQL`, acesse no navegador:
+
+```text
+[http://192.168.10.57/projeto_integrador/setup.php](http://192.168.10.57/projeto_integrador/setup.php)
+```
+
+### 6. Configuração de Conexão (database/connect.php)
 Verifique se o arquivo database/connect.php possui as credenciais de acesso corretas do seu PostgreSQL local:
 
 ```php
