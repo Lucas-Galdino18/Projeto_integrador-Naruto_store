@@ -13,7 +13,7 @@ Projeto acadômico em PHP e PostgreSQL para controle de estoque de uma loja tem�
 ---
 
 ## Protótipo no Figma
-- Link do Figma: https://www.figma.com/design/lqtZDe0TALyaODf1Alrbr0/Prototipagem-Trabalho-Integrado?node-id=0-1&p=f&t=1iQ0mReWa8enld6O-0
+- **Link do Figma:** https://www.figma.com/design/lqtZDe0TALyaODf1Alrbr0/Prototipagem-Trabalho-Integrado?node-id=0-1&p=f&t=1iQ0mReWa8enld6O-0
 
 ---
 
@@ -45,7 +45,7 @@ No diretório padrão de hospedagem do Apache (`/var/www/html/`):
 
 ```bash
 cd /var/www/html/
-git clone [https://github.com/SEU_USUARIO/SEU_REPOSITORIO.git](https://github.com/SEU_USUARIO/SEU_REPOSITORIO.git) projeto_integrador
+git clone [https://github.com/SEU_USUARIO/projeto_integrador.git](https://github.com/SEU_USUARIO/projeto_integrador.git)
 cd projeto_integrador
 ```
 
